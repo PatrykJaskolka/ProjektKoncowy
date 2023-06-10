@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+
+{% block title %}Edycja wydarzenia - {{ event.name }}{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <h2>Edycja wydarzenia - {{ event.name }}</h2>
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="name">Nazwa:</label>
+                <input type="text" id="name" name="name" class="form-control" value="{{ event.name }}">
+            </div>
+            <div class="form-group">
+                <label for="description">Opis:</label>
+                <textarea id="description" name="description" class="form-control">{{ event.description }}</textarea>
+            </div>
+            <div class="form-group">
+                <label for="place">Miejsce:</label>
+                <select name="place" class="form-control">
+                    {% for place in places %}
+                        <option value="{{ place.id }}" {% if place.id == event.place.id %}selected{% endif %}>{{ place.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="term">Termin:</label>
+                <input type="date" id="term" name="term" class="form-control" value="{{ event.term|date:'Y-m-d' }}">
+            </div>
+            <div class="form-group">
+                <label for="budget">Budżet:</label>
+                <input type="text" id="budget" name="budget" class="form-control" value="{{ event.budget }}">
+            </div>
+            <div class="form-group">
+                <label for="client">Klient:</label>
+                <select name="client" class="form-control">
+                    {% for client in clients %}
+                        <option value="{{ client.id }}" {% if client.id == event.client.id %}selected{% endif %}>{{ client.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="number_of_people">Liczba osób:</label>
+                <input type="number" id="number_of_people" name="number_of_people" class="form-control" value="{{ event.number_of_people }}">
+            </div>
+            <div class="form-group">
+                <label for="category">Kategoria:</label>
+                <select name="category" id="category" class="form-control">
+                  {% for category in categories %}
+                    <option value="{{ category.0 }}" {% if category.0 == event.category.id %}selected{% endif %}>{{ category.1 }}</option>
+                  {% endfor %}
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="accessories">Akcesoria:</label>
+                <div class="checkbox-group">
+                    {% for accessory in accessories %}
+                        <label class="checkbox">
+                            <input type="checkbox" name="accessories" value="{{ accessory.id }}" {% if accessory in event.accessories.all %}checked{% endif %}>
+                            <span class="checkmark"></span>
+                            {{ accessory.name }}
+                        </label>
+                    {% endfor %}
+                </div>
+            </div>
+
+
+            <input type="submit" value="Zapisz" class="btn btn-primary">
+        </form>
+    </div>
+{% endblock %}

@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block head %}
+    <title>Klienci</title>
+{% endblock %}
+
+
+
+{% block content %}
+    <div class="list-header">
+        <h2>Lista klientów</h2>
+        <a href="{% url 'add_client' %}" class="btn btn-success">Dodaj klienta</a>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Imię</th>
+                <th>Nazwisko</th>
+                <th>Email</th>
+                <th>Numer telefonu</th>
+                <th>Data urodzenia</th>
+                <th>Adres</th>
+                <th>Akcje</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for client in clients %}
+                <tr class="client-list-item">
+                    <td>{{ client.name }}</td>
+                    <td>{{ client.surname }}</td>
+                    <td>{{ client.email }}</td>
+                    <td>{{ client.phone_number }}</td>
+                    <td>{{ client.date_of_birth }}</td>
+                    <td>{{ client.address }}</td>
+                    <td>
+                        <div class="btn-group">
+                            <a href="{% url 'client_details' client.id %}" class="btn btn-info">Szczegóły</a>
+                        </div>
+                    </td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="7">Brak klientów</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="button-container">
+        <a href="{% url 'dashboard' %}" class="btn btn-primary">Powrót do strony głównej</a>
+    </div>
+{% endblock %}

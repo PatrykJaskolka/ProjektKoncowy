@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block head %}
+    <title>Strona główna</title>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2>Glówne akcje:</h2>
+    <div class="actions">
+        <a href="{% url 'add_oferta' %}" class="btn btn-primary btn-block">Stwórz ofertę</a>
+    </div>
+    <div class="actions">
+        <a href="{% url 'offers_list' %}" class="btn btn-primary btn-block">Moje oferty</a>
+    </div>
+    <div class="row actions-row">
+        <div class="col-sm-4">
+            <a href="{% url 'client_list' %}" class="btn btn-primary btn-block">Klienci</a>
+        </div>
+        <div class="col-sm-4">
+            <a href="{% url 'event_list' %}" class="btn btn-primary btn-block">Moje wydarzenia</a>
+        </div>
+        <div class="col-sm-4">
+            <a href="{% url 'subcontractor_list' %}" class="btn btn-primary btn-block">Podwykonawcy</a>
+        </div>
+    </div>
+
+    <h2>Nadchodzące wydarzenia:</h2>
+    <div class="events">
+        {% for event in upcoming_events %}
+        <div class="event">
+            <h3>{{ event.name }}</h3>
+            <p>{{ event.description }}</p>
+            <p>{{ event.term }}</p>
+            <hr>
+        </div>
+        {% empty %}
+        <p>Brak nadchodzących wydarzeń.</p>
+        {% endfor %}
+    </div>
+
+    <div class="button-container">
+        {% if request.user.is_authenticated %}
+            <!-- Przycisk wyświetlany tylko dla zalogowanych użytkowników -->
+            <a href="{% url 'logout' %}" class="btn btn-primary">Wylogouj się</a>
+        {% else %}
+            <!-- Przycisk wyświetlany tylko dla niezalogowanych użytkowników -->
+            <a href="{% url 'index' %}" class="btn btn-primary">Wyloguj się</a>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block head %}
+    <title>Szczegóły klienta</title>
+{% endblock %}
+
+{% block content %}
+    <h1>Informacje o kliencie:</h1>
+    <table class="table">
+        <tr>
+            <th>Imię:</th>
+            <td>{{ client.name }}</td>
+        </tr>
+        <tr>
+            <th>Nazwisko:</th>
+            <td>{{ client.surname }}</td>
+        </tr>
+        <tr>
+            <th>Email:</th>
+            <td>{{ client.email }}</td>
+        </tr>
+        <tr>
+            <th>Numer telefonu:</th>
+            <td>{{ client.phone_number }}</td>
+        </tr>
+        <tr>
+            <th>Data urodzenia:</th>
+            <td>{{ client.date_of_birth }}</td>
+        </tr>
+        <tr>
+            <th>Adres:</th>
+            <td>{{ client.address }}</td>
+        </tr>
+    </table>
+
+    <p>
+        <a href="{% url 'dashboard' %}" class="btn btn-secondary">Powrót do strony głównej</a>
+        <a href="{% url 'client_list' %}" class="btn btn-primary">Lista klientów</a>
+        <a href="{% url 'client_modify' client.id %}" class="btn btn-primary">Edytuj</a>
+        <form action="{% url 'delete_client' client.id %}" method="post" class="delete-form">
+            {% csrf_token %}
+            <input type="submit" value="Usuń" class="btn btn-danger">
+        </form>
+    </p>
+
+    <h2>Wydarzenia klienta:</h2>
+    <ul class="list-group">
+        {% for event in events %}
+            <li class="list-group-item">
+                {{ event.name }} - {{ event.term }}
+                <a href="{% url 'event_details' event.id %}" class="btn btn-info btn-sm">Szczegóły</a>
+            </li>
+        {% empty %}
+            <li class="list-group-item">Brak wydarzeń</li>
+        {% endfor %}
+    </ul>
+    <a href="{% url 'add_event' %}" class="btn btn-success">Dodaj wydarzenie</a>
+{% endblock %}

@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block head %}
+    <title>Szczegóły podwykonawcy</title>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2>Szczegóły podwykonawcy</h2>
+    <table class="table">
+        <tr>
+            <th>Nazwa:</th>
+            <td>{{ subcontractor.name }}</td>
+        </tr>
+        <tr>
+            <th>Opis:</th>
+            <td>{{ subcontractor.description }}</td>
+        </tr>
+    </table>
+
+    <h2>Usługi:</h2>
+    <ul class="list-group">
+        {% for service in services %}
+            <li class="list-group-item">
+                {{ service.service }} - Cena na osobę: {{ service.price_per_person }}, Cena stała: {{ service.price_fixed }}
+            </li>
+        {% empty %}
+            <li class="list-group-item">Brak usług</li>
+        {% endfor %}
+    </ul>
+
+    <div class="button-container">
+        <a href="{% url 'subcontractor_list' %}" class="btn btn-secondary">Powrót do listy podwykonawców</a>
+    </div>
+</div>
+{% endblock %}

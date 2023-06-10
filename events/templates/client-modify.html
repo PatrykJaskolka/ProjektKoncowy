@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block head %}
+    <title>Modyfikuj klienta</title>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2>Modyfikuj klienta</h2>
+    <form method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="name">Imię:</label>
+            <input type="text" id="name" name="name" class="form-control" value="{{ client.name }}">
+        </div>
+        <div class="form-group">
+            <label for="surname">Nazwisko:</label>
+            <input type="text" id="surname" name="surname" class="form-control" value="{{ client.surname }}">
+        </div>
+        <div class="form-group">
+            <label for="email">Adres e-mail:</label>
+            <input type="email" id="email" name="email" class="form-control" value="{{ client.email }}">
+        </div>
+        <div class="form-group">
+            <label for="phone_number">Numer telefonu:</label>
+            <input type="text" id="phone_number" name="phone_number" class="form-control" value="{{ client.phone_number }}">
+        </div>
+        <div class="form-group">
+            <label for="date_of_birth">Data urodzenia:</label>
+            <input type="date" id="date_of_birth" name="date_of_birth" class="form-control" value="{{ client.date_of_birth|date }}">
+        </div>
+        <div class="form-group">
+            <label for="address">Adres:</label>
+            <input type="text" id="address" name="address" class="form-control" value="{{ client.address }}">
+        </div>
+        <input type="submit" value="Zapisz" class="btn btn-primary">
+    </form>
+
+    <a href="{% url 'dashboard' %}" class="btn btn-primary">Powrót do strony głównej</a>
+</div>
+{% endblock %}

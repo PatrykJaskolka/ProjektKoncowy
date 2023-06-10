@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block head %}
+    <title>Użytkownicy</title>
+{% endblock %}
+{% block content %}
+    <h2>Zarejestrowani użytkownicy</h2>
+    <ul>
+    {% for u in users %}
+        <li>
+        {{ u.pk }}:
+        {{ u.username }}
+        {% if u.first_name or u.last_name %}
+        ({{ u.first_name }} {{ u.last_name }}),
+        {% endif %}
+        e-mail: {{ u.email }}
+        {% if u.is_active %}
+            [aktywny]
+        {% endif %}
+        {% if u.is_staff %}
+            [pracownik]
+        {% endif %}
+        {% if u.is_superuser %}
+            [administrator]
+        {% endif %}
+        </li>
+    {% empty %}
+        <li>brak użytkowników</li>
+    {% endfor %}
+    </ul>
+{% endblock %}

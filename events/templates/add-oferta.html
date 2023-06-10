@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block head %}
+    <title>Dodawanie oferty</title>
+{% endblock %}
+
+{% block content %}
+    <form method="POST" action="{% url 'add_oferta' %}">
+    {% csrf_token %}
+    <h3>Wydarzenie</h3>
+    <label>Wybierz wydarzenie:</label>
+    <select name="event" class="form-control">
+        {% for event in events %}
+            <option value="{{ event.id }}">{{ event.name }}</option>
+        {% endfor %}
+    </select>
+
+    <h3>Dodawanie usług podwykonawców</h3>
+    <select name="subcontractor_services" multiple class="form-control">
+        {% for service in subcontractor_services %}
+            <option value="{{ service.id }}">{{ service.service }}</option>
+        {% endfor %}
+    </select>
+
+    <h3>Dodawanie akcesoriów</h3>
+    <select name="accessories" multiple class="form-control">
+        {% for accessory in accessories %}
+            <option value="{{ accessory.id }}">{{ accessory.name }}</option>
+        {% endfor %}
+    </select>
+
+    <h3>Dodatkowe informacje</h3>
+    <label>Rabat:</label>
+    <input class="form-control" type="number" name="discount" value="">
+    <br>
+    <label>Notatki:</label>
+    <textarea class="form-control" name="notes" rows="5"></textarea>
+    <br>
+    <label>Status:</label>
+    <select name="status" class="form-control">
+        <option value="Oczekujące">Oczekujące</option>
+        <option value="Zatwierdzone">Zatwierdzone</option>
+        <option value="Anulowane">Anulowane</option>
+    </select>
+    <br>
+
+    <button type="submit" class="btn btn-primary">Dodaj ofertę</button>
+</form>
+<a href="{% url 'dashboard' %}" class="btn btn-secondary">Powrót do strony głównej</a>
+{% endblock %}

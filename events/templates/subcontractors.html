@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block head %}
+    <title>Lista podwykonawców</title>
+{% endblock %}
+
+{% block content %}
+    <div class="list-header">
+        <h2>Lista podwykonawców</h2>
+        <a href="{% url 'add_subcontractor' %}" class="btn btn-success">Dodaj podwykonawcę</a>
+    </div>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Nazwa</th>
+                <th>Opis</th>
+                <th>Akcje</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for subcontractor in subcontractors %}
+                <tr>
+                    <td>{{ subcontractor.name }}</td>
+                    <td>{{ subcontractor.description }}</td>
+                    <td>
+                        <div class="btn-group">
+                            <a href="{% url 'subcontractor_details' subcontractor.id %}" class="btn btn-info">Szczegóły</a>
+                            <a href="{% url 'subcontractor_modify' subcontractor.id %}" class="btn btn-primary">Edytuj</a>
+                            <form action="{% url 'delete_subcontractor' subcontractor.id %}" method="post" class="delete-form">
+                                {% csrf_token %}
+                                <input type="submit" value="Usuń" class="btn btn-danger">
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="3">Brak podwykonawców</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="button-container">
+        <a href="{% url 'dashboard' %}" class="btn btn-primary">Powrót do strony głównej</a>
+    </div>
+{% endblock %}

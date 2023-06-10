@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+
+{% block head %}
+    <title>Dodawanie wydarzenia</title>
+{% endblock %}
+
+{% block content %}
+    <h2>Dodawanie wydarzenia</h2>
+    <form method="POST">
+        {% csrf_token %}
+        <table class="table borderless">
+            <tbody>
+                <tr class="d-flex">
+                    <th scope="row" class="col-2">Wybierz klienta:</th>
+                    <td class="col-7">
+                        <select name="client" class="form-control">
+                            {% for client in clients %}
+                                <option value="{{ client.id }}">{{ client.name }} {{ client.surname }}</option>
+                            {% endfor %}
+                        </select>
+                    </td>
+                </tr>
+                <tr class="d-flex">
+                    <th scope="row" class="col-2">Nazwa wydarzenia</th>
+                    <td class="col-7"><textarea class="form-control" name="name" rows="1"></textarea></td>
+                </tr>
+                <tr class="d-flex">
+                    <th scope="row" class="col-2">Opis wydarzenia</th>
+                    <td class="col-7"><textarea class="form-control" name="description" rows="5"></textarea></td>
+                </tr>
+                <tr class="d-flex">
+                    <th scope="row" class="col-2">Termin</th>
+                    <td class="col-3">
+                        <input class="form-control" type="date" name="term" value="">
+                    </td>
+                </tr>
+                <tr class="d-flex">
+                    <th scope="row" class="col-2">Budżet</th>
+                    <td class="col-3">
+                        <input class="form-control" type="number" name="budget" value="">
+                    </td>
+                </tr>
+                <tr class="d-flex">
+                    <th scope="row" class="col-2">Liczba osób</th>
+                    <td class="col-3">
+                        <input class="form-control" type="number" name="number_of_people" value="">
+                    </td>
+                </tr>
+                <tr class="d-flex">
+                    <th scope="row" class="col-2">Miejsce:</th>
+                    <td class="col-7">
+                        <select name="place" class="form-control">
+                            {% for place in places %}
+                                <option value="{{ place.id }}">{{ place.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </td>
+                </tr>
+                <tr class="d-flex">
+                    <th scope="row" class="col-2">Kategoria:</th>
+                    <td class="col-7">
+                        <select name="category" class="form-control">
+                            {% for category in categories %}
+                                <option value="{{ category.0 }}">{{ category.1 }}</option>
+                            {% endfor %}
+                        </select>
+                    </td>
+                </tr>
+                <tr class="d-flex">
+                    <th scope="row" class="col-2">Dodatki:</th>
+                    <td class="col-7">
+                        {% for accessory in accessories %}
+                            <label><input type="checkbox" name="accessories" value="{{ accessory.id }}"> {{ accessory.name }}</label><br>
+                        {% endfor %}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <button type="submit" class="btn btn-primary">Dodaj wydarzenie</button>
+    </form>
+    <a href="{% url 'dashboard' %}" class="btn btn-secondary">Powrót do strony głównej</a>
+{% endblock %}

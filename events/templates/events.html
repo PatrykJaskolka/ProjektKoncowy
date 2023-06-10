@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% block head %}
+    <title>Lista wydarzeń</title>
+{% endblock %}
+
+{% block content %}
+    <h1>Lista wydarzeń</h1>
+
+    <div class="list-header">
+        <a href="{% url 'add_event' %}" class="btn btn-success">Dodaj wydarzenie</a>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Nazwa</th>
+                <th>Opis</th>
+                <th>Miejsce</th>
+                <th>Termin</th>
+                <th>Budżet</th>
+                <th>Akcje</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for event in events %}
+                <tr>
+                    <td>{{ event.name }}</td>
+                    <td>{{ event.description }}</td>
+                    <td>{{ event.place.name }}</td>
+                    <td>{{ event.term }}</td>
+                    <td>{{ event.budget }}</td>
+                    <td>
+                        <div class="btn-group">
+                            <a href="{% url 'event_details' event.id %}" class="btn btn-info">Szczegóły</a>
+                            <a href="{% url 'event_modify' event.id %}" class="btn btn-primary">Edytuj</a>
+                            <form action="{% url 'delete_event' event.id %}" method="post" class="delete-form">
+                                {% csrf_token %}
+                                <input type="submit" value="Usuń" class="btn btn-danger">
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="6">Brak wydarzeń</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="button-container">
+        <a href="{% url 'dashboard' %}" class="btn btn-primary">Powrót do strony głównej</a>
+    </div>
+{% endblock %}

@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+
+{% block head %}
+    <title>Szczegóły wydarzenia</title>
+{% endblock %}
+
+{% block content %}
+    <h1>Szczegóły wydarzenia:</h1>
+    <table class="table">
+        <tr>
+            <th>Nazwa:</th>
+            <td>{{ event.name }}</td>
+        </tr>
+        <tr>
+            <th>Opis:</th>
+            <td>{{ event.description }}</td>
+        </tr>
+        <tr>
+            <th>Miejsce:</th>
+            <td>{{ event.place.name }}</td>
+        </tr>
+        <tr>
+            <th>Termin:</th>
+            <td>{{ event.term }}</td>
+        </tr>
+        <tr>
+            <th>Budżet:</th>
+            <td>{{ event.budget }}</td>
+        </tr>
+        <tr>
+            <th>Klient:</th>
+            <td>{{ event.client.name }} {{ event.client.surname }}</td>
+        </tr>
+        <tr>
+            <th>Liczba osób:</th>
+            <td>{{ event.number_of_people }}</td>
+        </tr>
+        <tr>
+            <th>Kategoria:</th>
+            <td>{{ event.category.get_category_name_display }}</td>
+        </tr>
+        <tr>
+            <th>Dodatki:</th>
+            <td>
+                <ul>
+                    {% for accessory in event.accessories.all %}
+                        <li>{{ accessory.name }}</li>
+                    {% endfor %}
+                </ul>
+            </td>
+        </tr>
+    </table>
+
+    <p>
+        <a href="{% url 'dashboard' %}" class="btn btn-secondary">Powrót do strony głównej</a>
+        <a href="{% url 'event_list' %}" class="btn btn-primary">Lista wydarzeń</a>
+        <a href="{% url 'event_modify' event.id %}" class="btn btn-primary">Edytuj</a>
+        {% if event.oferta %}
+            <a href="{% url 'oferta_details' event.oferta.id %}" class="btn btn-info">Szczegóły oferty</a>
+        {% else %}
+            <a href="{% url 'add_oferta' %}" class="btn btn-primary">Stwórz ofertę</a>
+        {% endif %}
+        <form action="{% url 'delete_event' event.id %}" method="post" class="delete-form">
+            {% csrf_token %}
+            <input type="submit" value="Usuń" class="btn btn-danger">
+        </form>
+    </p>
+{% endblock %}

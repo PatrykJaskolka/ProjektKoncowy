@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h2>Profil użytkownika</h2>
+    <p>Witaj, {{ request.user.username }}! Nie trac czasu ! Juz teraz wybierz jeden z naszych pakietow, a oferte przedstawimy Ci w ciagu 2 dni.</p>
+
+    <h3>Wybierz pakiet:</h3>
+    <table>
+        <tr>
+            <th>Nazwa</th>
+            <th>Opis</th>
+        </tr>
+        <tr>
+            <td>
+                <input type="radio" id="bronze" name="package" value="bronze">
+                <label for="bronze">Pakiet Bronze</label>
+            </td>
+            <td>Przygotowanie oferty imprezy z wyłącznie produktami/usługami dostępnymi w naszej firmie</td>
+        </tr>
+        <tr>
+            <td>
+                <input type="radio" id="silver" name="package" value="silver">
+                <label for="silver">Pakiet Silver</label>
+            </td>
+            <td>Rozrzerz pakiet Bronze o uslugi firm zewnetrznych</td>
+        </tr>
+        <tr>
+            <td>
+                <input type="radio" id="gold" name="package" value="gold">
+                <label for="gold">Pakiet Gold</label>
+            </td>
+            <td>Wszystkie funkcje pakietów Bronze i Silver.
+Pełna swoboda personalizacji wydarzeń (dostosowanie wyglądu, szablony tematyczne, niestandardowe elementy graficzne).
+Zaawansowane narzędzia zarządzania gośćmi (np. personalizowane zaproszenia, systemy rejestracji online, zarządzanie preferencjami gości)</td>
+        </tr>
+    </table>
+
+    <form method="post">
+        {% csrf_token %}
+        <input type="submit" value="Wybierz" class="btn btn-primary">
+    </form>
+
+    <a href="{% url 'logout' %}" class="btn btn-danger">Wyloguj się</a>
+{% endblock %}
+

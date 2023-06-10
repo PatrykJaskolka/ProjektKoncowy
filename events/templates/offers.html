@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block head %}
+    <title>Lista ofert</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        /* Dodatkowe style */
+        .btn {
+            margin-right: 5px;
+        }
+        .offer-link {
+            display: inline-block;
+            padding: 8px 12px;
+            background-color: #007bff;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+        .offer-link:hover {
+            background-color: #0056b3;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <h1>Lista ofert</h1>
+    <ul class="list-group">
+        {% for oferta in offers %}
+            <li class="list-group-item">
+                <div class="d-flex justify-content-between align-items-center">
+                    <a href="{% url 'oferta_details' oferta.id %}" class="offer-link"><i class="fas fa-file-alt"></i> Oferta {{ oferta.id }}</a>
+                    <span>Wydarzenie: {{ oferta.event.name }} ({{ oferta.event.term }})</span>
+                </div>
+            </li>
+        {% empty %}
+            <li class="list-group-item">Brak ofert</li>
+        {% endfor %}
+    </ul>
+    <div class="button-container">
+        <a href="{% url 'dashboard' %}" class="btn btn-secondary">Powrót do strony głównej</a>
+    </div>
+{% endblock %}
